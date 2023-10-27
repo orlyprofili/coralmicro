@@ -95,11 +95,11 @@ def CreateFlashtoolExe(core_out_dir, root_dir):
       pyinstaller_separator +
       os.path.join('third_party', 'nxp', 'elftosb', platform_dir),
       '--add-binary',
-      os.path.join(root_dir, 'third_party', toolchain_dir, 'gcc-arm-none-eabi-10.3-2021.10', 'bin', 'arm-none-eabi-objdump' +
-                   exe_extension) + pyinstaller_separator + os.path.join('third_party', toolchain_dir, 'gcc-arm-none-eabi-10.3-2021.10', 'bin'),
+      os.path.join(root_dir, 'third_party', toolchain_dir, 'bin', 'arm-none-eabi-objdump' +
+                   exe_extension) + pyinstaller_separator + os.path.join('third_party', toolchain_dir, 'bin'),
       '--add-binary',
-      os.path.join(root_dir, 'third_party', toolchain_dir, 'gcc-arm-none-eabi-10.3-2021.10', 'bin', 'arm-none-eabi-strip' +
-                   exe_extension) + pyinstaller_separator + os.path.join('third_party', toolchain_dir, 'gcc-arm-none-eabi-10.3-2021.10', 'bin'),
+      os.path.join(root_dir, 'third_party', toolchain_dir, 'bin', 'arm-none-eabi-strip' +
+                   exe_extension) + pyinstaller_separator + os.path.join('third_party', toolchain_dir, 'bin'),
       '--hidden-import', 'progress.bar',
       '--hidden-import', 'progress',
       '--hidden-import', 'hexformat',
@@ -252,7 +252,7 @@ def manifest_main(args, **kwargs):
             {
                 'packager': 'coral',
                 'name': 'arm-none-eabi-gcc',
-                'version': '10.3-2021.10'
+                'version': '12.3.Rel1'
             },
             {
                 'packager': 'coral',
@@ -272,27 +272,34 @@ def manifest_main(args, **kwargs):
               'tools': [
                   {
                       'name': 'arm-none-eabi-gcc',
-                      'version': '10.3-2021.10',
+                      'version': '12.3.Rel1',
                       'systems': [
                           {
                               'host': 'x86_64-pc-linux-gnu',
-                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2',
-                              'archiveFileName': 'gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2',
-                              'checksum': 'MD5:2383e4eb4ea23f248d33adc70dc3227e',
+                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz',
+                              'archiveFileName': 'arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz',
+                              'checksum': 'SHA-256:12a2815644318ebcceaf84beabb665d0924b6e79e21048452c5331a56332b309',
                               'size': '157089706'
                           },
                           {
                               'host': 'x86_64-apple-darwin',
-                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2',
-                              'archiveFileName': 'gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2',
-                              'checksum': 'MD5:7f2a7b7b23797302a9d6182c6e482449',
+                                'url': 'https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-darwin-arm64-x86_64-none-eabi.tar.xz',
+                              'archiveFileName': 'arm-gnu-toolchain-12.3.rel1-darwin-arm64-x86_64-none-eabi.tar.xz',
+                              'checksum': 'SHA-256:2383e4ebe6ed8bf930fad9ce33e120ab90b36957b1f779fccaa6de6c9ca9a58982c042914ea23f248d33adc70dc3227e',
                               'size': '158961466'
                           },
                           {
-                              'host': 'i686-mingw32',
-                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-win32.zip',
-                              'archiveFileName': 'gcc-arm-none-eabi-10.3-2021.10-win32.zip ',
-                              'checksum': 'MD5:2bc8f0c4c4659f8259c8176223eeafc1',
+                              'host': 'arm64-apple-darwin',
+                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-darwin-arm64-arm-none-eabi.tar.xz',
+                              'archiveFileName': 'arm-gnu-toolchain-12.3.rel1-darwin-arm64-arm-none-eabi.tar.xz',
+                              'checksum': 'SHA-256:3b2eee0bdf71c1bbeb3c3b7424fbf7bd9d5c3f0f5a3a4a78159c9e3ad219e7bd',
+                              'size': '158961466'
+                          },
+                          {
+                              'host': 'mingw-w64-i686',
+                              'url': 'https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi.zip',
+                              'archiveFileName': 'arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi.zip',
+                              'checksum': 'SHA-256:d52888bf59c5262ebf3e6b19b9f9e6270ecb60fd218cf81a4e793946e805a654',
                               'size': '200578763'
                           }
                       ]
@@ -348,7 +355,7 @@ def core_main(args, **kwargs):
 
     # Copy variant libraries.
     ar_path = os.path.join(root_dir, 'third_party', toolchain_dir,
-                           'gcc-arm-none-eabi-10.3-2021.10', 'bin',
+                           'bin',
                            'arm-none-eabi-ar' + exe_extension)
     for variant in ['coral_micro', 'coral_micro_poe', 'coral_micro_wifi']:
       libs_dir = os.path.join(core_out_dir, 'variants', variant, 'libs')
